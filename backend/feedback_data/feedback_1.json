@@ -1,0 +1,24 @@
+{
+  "file_id": "test_file_001",
+  "element_id": "plumbing-42",
+  "original_detection": {
+    "type": "pipe",
+    "position": {
+      "x": 100,
+      "y": 200,
+      "z": 0
+    },
+    "confidence": 0.85
+  },
+  "corrected_data": {
+    "type": "valve",
+    "position": {
+      "x": 100,
+      "y": 200,
+      "z": 0
+    }
+  },
+  "feedback_type": "element_correction",
+  "timestamp": "2025-04-04T20:56:41.798613",
+  "feedback_id": "feedback_1"
+}

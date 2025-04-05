@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Upload and Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .pdf-viewer {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .pdf-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-secondary {
+            background-color: #4a4a4a;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #4facfe;
+            color: white;
+        }
+        .pdf-content {
+            background-color: #333;
+            border-radius: 5px;
+            min-height: 400px;
+            position: relative;
+        }
+        .pdf-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: #b0b0b0;
+            text-align: center;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(79, 172, 254, 0.2);
+            border-radius: 50%;
+            border-top-color: #4facfe;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        #pdf-analysis-status {
+            text-align: center;
+            padding: 20px;
+            color: #4facfe;
+        }
+        #pdf-analysis-results {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 15px;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        .result-label {
+            font-weight: bold;
+            color: #b0b0b0;
+        }
+        .result-value {
+            color: #4facfe;
+            font-weight: bold;
+        }
+        .materials-list {
+            margin-top: 15px;
+        }
+        .material-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .material-item:last-child {
+            border-bottom: none;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label.btn {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PDF Upload and Analysis</h1>
+        
+        <div class="pdf-viewer">
+            <div class="pdf-toolbar">
+                <button class="btn btn-secondary" id="zoom-in-btn">Zoom In</button>
+                <button class="btn btn-secondary" id="zoom-out-btn">Zoom Out</button>
+                <button class="btn btn-secondary" id="pan-btn">Pan</button>
+                <button class="btn btn-secondary" id="measure-btn">Measure</button>
+                <label for="pdf-upload" class="btn btn-primary">Upload New PDF</label>
+                <input type="file" id="pdf-upload" accept=".pdf">
+            </div>
+            
+            <div class="pdf-content" id="pdf-viewer">
+                <div class="pdf-placeholder" id="pdf-placeholder">
+                    <p>PDF drawing will be displayed here</p>
+                    <p>Drag and drop a PDF file or click Upload</p>
+                </div>
+                
+                <div id="pdf-analysis-status" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Analyzing PDF... Please wait</p>
+                </div>
+                
+                <div id="pdf-analysis-results" style="display: none;">
+                    <h3>Analysis Results</h3>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <span class="result-label">Symbols Detected:</span>
+                            <span class="result-value" id="symbols-count">0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Pipe Length:</span>
+                            <span class="result-value" id="pipe-length">0</span> ft
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Confidence Score:</span>
+                            <span class="result-value" id="confidence-score">0</span>%
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Analysis Time:</span>
+                            <span class="result-value" id="analysis-time">0</span>
+                        </div>
+                    </div>
+                    <h4>Estimated Materials</h4>
+                    <div class="materials-list" id="materials-list">
+                        <!-- Materials will be listed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API URL Configuration
+        const API_URL = 'http://127.0.0.1:3000';
+
+        document.addEventListener('DOMContentLoaded', function()  {
+            // PDF Upload Functionality
+            const pdfUploadInput = document.getElementById('pdf-upload');
+            const pdfPlaceholder = document.getElementById('pdf-placeholder');
+            const pdfAnalysisStatus = document.getElementById('pdf-analysis-status');
+            const pdfAnalysisResults = document.getElementById('pdf-analysis-results');
+            
+            // Handle file selection
+            pdfUploadInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file && file.type === 'application/pdf') {
+                    uploadAndAnalyzePDF(file);
+                } else {
+                    alert('Please select a valid PDF file.');
+                }
+            });
+            
+            // Handle drag and drop
+            const pdfViewer = document.getElementById('pdf-viewer');
+            
+            pdfViewer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                pdfViewer.classList.add('drag-over');
+            });
+            
+            pdfViewer.addEventListener('dragleave', function() {
+                pdfViewer.classList.remove('drag-over');
+            });
+            
+            pdfViewer.addEventListener('drop', function(e) {
+                e.preventDefault();
+                pdfViewer.classList.remove('drag-over');
+                
+                const file = e.dataTransfer.files[0];
+                if (file && file.type === 'application/pdf') {
+                    uploadAndAnalyzePDF(file);
+                } else {
+                    alert('Please drop a valid PDF file.');
+                }
+            });
+            
+            // Function to upload and analyze PDF
+            function uploadAndAnalyzePDF(file) {
+                // Show loading status
+                pdfPlaceholder.style.display = 'none';
+                pdfAnalysisStatus.style.display = 'block';
+                pdfAnalysisResults.style.display = 'none';
+                
+                // Create form data for file upload
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                // Send file to backend for analysis
+                fetch(`${API_URL}/upload`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Hide loading status
+                    pdfAnalysisStatus.style.display = 'none';
+                    pdfAnalysisResults.style.display = 'block';
+                    
+                    // Display results
+                    document.getElementById('symbols-count').textContent = data.symbols.count;
+                    document.getElementById('pipe-length').textContent = data.symbols.total_pipe_length.toFixed(1);
+                    document.getElementById('confidence-score').textContent = data.symbols.confidence_score;
+                    document.getElementById('analysis-time').textContent = data.analysis_time;
+                    
+                    // Display materials
+                    const materialsList = document.getElementById('materials-list');
+                    materialsList.innerHTML = '';
+                    
+                    data.symbols.materials.forEach(material => {
+                        const materialItem = document.createElement('div');
+                        materialItem.className = 'material-item';
+                        materialItem.innerHTML = `
+                            <span class="material-name">${material.type}</span>
+                            <span class="material-quantity">${material.quantity}</span>
+                        `;
+                        materialsList.appendChild(materialItem);
+                    });
+                })
+                .catch(error => {
+                    // Hide loading status
+                    pdfAnalysisStatus.style.display = 'none';
+                    pdfAnalysisResults.style.display = 'block';
+                    
+                    // Display error
+                    pdfAnalysisResults.innerHTML = `
+                        <h3>Analysis Error</h3>
+                        <p>There was an error analyzing your PDF: ${error.message}</p>
+                        <p>Please try again with a different file or contact support.</p>
+                    `;
+                    console.error('Error analyzing PDF:', error);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

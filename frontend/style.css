@@ -1,0 +1,216 @@
+# Create styles.css
+
+/* PDF Upload and Analysis Styles */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(79, 172, 254, 0.2);
+    border-radius: 50%;
+    border-top-color: #4facfe;
+    animation: spin 1s ease-in-out infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#pdf-analysis-status {
+    text-align: center;
+    padding: 20px;
+    color: #4facfe;
+}
+
+#pdf-analysis-results {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+.result-label {
+    font-weight: bold;
+    color: #b0b0b0;
+}
+
+.result-value {
+    color: #4facfe;
+    font-weight: bold;
+}
+
+.materials-list {
+    margin-top: 15px;
+}
+
+.material-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.material-item:last-child {
+    border-bottom: none;
+}
+
+.pdf-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: #b0b0b0;
+    text-align: center;
+}
+
+/* Make file input label look like a button */
+input[type="file"] {
+    display: none;
+}
+
+label.btn {
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
+cat > ~/precisiontake/frontend/styles.css << 'EOF'
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header {
+  background-color: #1a1a2e;
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero {
+  background-color: #ffffff;
+  padding: 3rem;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+button {
+  background-color: #0f3460;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #16213e;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.feature {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.demo-section {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-area {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="file"] {
+  margin-bottom: 1rem;
+}
+
+.results-container {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: #666;
+}
+EOF

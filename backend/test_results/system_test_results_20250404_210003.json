@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-04-04T21:00:03.083874",
+  "overall_status": "FAILED",
+  "endpoint_status": {
+    "health_endpoint": false,
+    "original_pdf_upload": false,
+    "enhanced_pdf_analysis": false,
+    "cross_industry_detection": false,
+    "compliance_checking": false,
+    "cad_conversion": false,
+    "ai_feedback": false,
+    "model_info": false,
+    "compliance_regions": false,
+    "performance_metrics": false
+  }
+}

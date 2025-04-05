@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrecisionTake.ai</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #f8f9fa;
+      background-color: #121212;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background-color: #1a1a2e;
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #e0e0e0;
+    }
+
+    .hero {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      color: #b0b0b0;
+    }
+
+    button {
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      color: #1a1a2e;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(79, 172, 254, 0.6);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .feature {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feature:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #4facfe;
+    }
+
+    .feature p {
+      color: #b0b0b0;
+      font-size: 1.1rem;
+    }
+
+    .demo-section {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      border-radius: 20px;
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .demo-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .demo-section p {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #b0b0b0;
+    }
+
+    .upload-area {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input[type="file"] {
+      margin-bottom: 1.5rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      color: #e0e0e0;
+    }
+
+    .results-container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      color: #e0e0e0;
+    }
+
+    .results-container h4 {
+      color: #4facfe;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .results-container ul {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero h2 {
+        font-size: 2rem;
+      }
+      
+      .feature {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>PrecisionTake.ai</h1>
+      <p>AI-Powered Plumbing Estimation Platform</p>
+    </header>
+    
+    <main>
+      <section class="hero">
+        <h2>Transform Your Plumbing Estimation Process</h2>
+        <p>Upload PDF drawings and get accurate material estimates with our AI-powered platform.</p>
+        <button id="demo-btn">Try Demo</button>
+      </section>
+      
+      <section class="features">
+        <div class="feature">
+          <h3>99.8% Accuracy</h3>
+          <p>Our AI system delivers industry-leading accuracy in symbol recognition and measurement extraction.</p>
+        </div>
+        <div class="feature">
+          <h3>Multi-Pass Analysis</h3>
+          <p>Four-stage validation ensures reliable results every time.</p>
+        </div>
+        <div class="feature">
+          <h3>Code Compliance</h3>
+          <p>Automatic verification against multiple plumbing code standards.</p>
+        </div>
+      </section>
+      
+<!-- PDF Viewer -->
+<section class="bento-item bento-item-2x2">
+    <h2>PDF Viewer</h2>
+    <div class="pdf-viewer-container">
+        <div class="pdf-toolbar mb-2">
+            <button class="btn btn-secondary" id="zoom-in-btn">Zoom In</button>
+            <button class="btn btn-secondary" id="zoom-out-btn">Zoom Out</button>
+            <button class="btn btn-secondary" id="pan-btn">Pan</button>
+            <button class="btn btn-secondary" id="measure-btn">Measure</button>
+            <label for="pdf-upload" class="btn btn-primary">Upload New PDF</label>
+            <input type="file" id="pdf-upload" accept=".pdf" style="display: none;">
+        </div>
+        <div class="pdf-content" id="pdf-viewer">
+            <!-- PDF content will be rendered here -->
+            <div class="pdf-placeholder" id="pdf-placeholder">
+                <p>PDF drawing will be displayed here</p>
+                <p>Drag and drop a PDF file or click Upload</p>
+            </div>
+            <div id="pdf-analysis-status" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Analyzing PDF... Please wait</p>
+            </div>
+            <div id="pdf-analysis-results" style="display: none;">
+                <h3>Analysis Results</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <span class="result-label">Symbols Detected:</span>
+                        <span class="result-value" id="symbols-count">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Pipe Length:</span>
+                        <span class="result-value" id="pipe-length">0</span> ft
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Confidence Score:</span>
+                        <span class="result-value" id="confidence-score">0</span>%
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Analysis Time:</span>
+                        <span class="result-value" id="analysis-time">0</span>
+                    </div>
+                </div>
+                <h4>Estimated Materials</h4>
+                <div class="materials-list" id="materials-list">
+                    <!-- Materials will be listed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+    
+    <footer>
+      <p>&copy; 2025 PrecisionTake.ai - All Rights Reserved</p>
+    </footer>
+  </div>
+  
+  <script>
+    // API URL for backend connection
+    const API_URL = 'http://localhost:8000';
+
+    document.addEventListener('DOMContentLoaded', function()  {
+      // Test backend connection
+      fetch(`${API_URL}/health`)
+        .then(response => response.json())
+        .then(data => console.log('Backend connection successful:', data))
+        .catch(error => console.error('Error connecting to backend:', error));
+      
+      // Add code to fetch and display symbols
+      fetch(`${API_URL}/api/symbols`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('Symbols data:', data);
+          // You could update the UI with this data
+        })
+        .catch(error => console.error('Error fetching symbols:', error));
+      
+      const demoBtn = document.getElementById('demo-btn');
+      const demoArea = document.getElementById('demo-area');
+      const analyzeBtn = document.getElementById('analyze-btn');
+      const resultsArea = document.getElementById('results');
+      const fileInput = document.getElementById('pdf-upload');
+      
+      demoBtn.addEventListener('click', function() {
+        // Toggle demo area visibility
+        if (demoArea.style.display === 'none') {
+          demoArea.style.display = 'block';
+          demoBtn.textContent = 'Hide Demo';
+        } else {
+          demoArea.style.display = 'none';
+          demoBtn.textContent = 'Try Demo';
+        }
+      });
+      
+      analyzeBtn.addEventListener('click', function() {
+        if (!fileInput.files.length) {
+          alert('Please select a PDF file first');
+          return;
+        }
+        
+        // In a real implementation, this would send the file to the backend
+        // For now, we'll just show a simulated result
+        resultsArea.style.display = 'block';
+        
+        // Simulate API call delay
+        setTimeout(function() {
+          const resultsContainer = document.querySelector('.results-container');
+          resultsContainer.innerHTML = `
+            <h4>Analysis Complete</h4>
+            <p><strong>Symbols Detected:</strong> 24 plumbing fixtures</p>
+            <p><strong>Pipe Length:</strong> 142.5 feet</p>
+            <p><strong>Estimated Materials:</strong></p>
+            <ul>
+              <li>PVC Pipe (1"): 86.3 feet</li>
+              <li>PVC Pipe (2"): 56.2 feet</li>
+              <li>Elbows (1"): 12 units</li>
+              <li>Elbows (2"): 8 units</li>
+              <li>T-Joints: 6 units</li>
+            </ul>
+            <p><strong>Confidence Score:</strong> 98.7%</p>
+          `;
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>
