@@ -1,0 +1,8 @@
+{
+  "name": "PrecisionTakeAI",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "backend",
+  "workspaceFolder": "/app",
+  "forwardPorts": [8000, 80],
+  "remoteUser": "root"
+}
