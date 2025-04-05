@@ -1,8 +1,9 @@
 {
   "name": "PrecisionTakeAI",
-  "dockerComposeFile": "../docker-compose.yml",
-  "service": "backend",
-  "workspaceFolder": "/app",
+  "image": "mcr.microsoft.com/devcontainers/universal:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
   "forwardPorts": [8000, 80],
-  "remoteUser": "root"
+  "postCreateCommand": "echo 'Container is ready!'"
 }
